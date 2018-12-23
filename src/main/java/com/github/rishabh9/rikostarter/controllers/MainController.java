@@ -45,7 +45,7 @@ public class MainController {
             final AccessToken accessToken = loginService.getAccessToken(tokenRequest).get();
             // Save 'accessToken' into a database or cache
             cache.updateAccessToken(accessToken);
-            log.trace("AccessToken: {}", cache.getAccessToken().get().getToken());
+            log.info("AccessToken: {}", cache.getAccessToken().get().getToken());
         } catch (ExecutionException | InterruptedException e) {
             log.fatal("Error obtaining access token", e);
             throw e;
