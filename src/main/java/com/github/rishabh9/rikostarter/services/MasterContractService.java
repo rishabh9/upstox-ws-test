@@ -6,6 +6,7 @@ import com.github.rishabh9.riko.upstox.feed.FeedService;
 import com.github.rishabh9.riko.upstox.users.UserService;
 import com.github.rishabh9.rikostarter.models.MasterContract;
 import com.google.common.base.Strings;
+import com.google.common.util.concurrent.RateLimiter;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -34,22 +35,17 @@ public class MasterContractService {
     @Autowired
     private FeedService feedService;
 
-    private void sleep() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            log.fatal("Sleep was interrupted!", e);
-        }
-    }
+    private static RateLimiter rateLimiter = RateLimiter.create(1.0D);
 
     public void subscribe() {
         log.info("Subscribing...");
         final Set<String> futures = SYMBOLS.stream()
-                .map(symbol -> symbol + "18DECFUT")
+                .map(symbol -> symbol + "19JANFUT")
                 .collect(Collectors.toSet());
+        rateLimiter.acquire();
         feedService.subscribe(LiveFeedType.FULL, Exchanges.NSE_EQUITY, String.join(",", SYMBOLS))
                 .thenAccept(response -> log.info("Subscribing... Done"));
-        sleep();
+        rateLimiter.acquire();
         feedService.subscribe(LiveFeedType.FULL, Exchanges.NSE_FnO, String.join(",", futures))
                 .thenAccept(response -> log.info("Subscribing... Done"));
     }
@@ -57,11 +53,12 @@ public class MasterContractService {
     public void unsubscribe() {
         log.info("Unsubscribing...");
         final Set<String> futures = SYMBOLS.stream()
-                .map(symbol -> symbol + "18DECFUT")
+                .map(symbol -> symbol + "19JANFUT")
                 .collect(Collectors.toSet());
+        rateLimiter.acquire();
         feedService.unsubscribe(LiveFeedType.FULL, Exchanges.NSE_EQUITY, String.join(",", SYMBOLS))
                 .thenAccept(response -> log.info("Unsubscribing... Done"));
-        sleep();
+        rateLimiter.acquire();
         feedService.unsubscribe(LiveFeedType.FULL, Exchanges.NSE_FnO, String.join(",", futures))
                 .thenAccept(response -> log.info("Unsubscribing... Done"));
     }
