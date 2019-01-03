@@ -7,8 +7,8 @@
 3. `cd upstox-ws-test`
 4. Update `com.github.rishabh9.rikostarter.constants.RikoStarterConstants` with your Upstox's `API Key` and `API Secret`.
 4. `./gradlew build`
-5. Run using Upstox production: `java -Driko.server.url=api.upstox.com -Driko.ws.server.url=ws-api.upstox.com -jar riko-starter-0.0.1-SNAPSHOT.jar` 
-6. Run using Upstox staging: `java -Driko.server.url=staging-api.upstox.com -Driko.ws.server.url=staging-ws-api.upstox.com -jar riko-starter-0.0.1-SNAPSHOT.jar`
+5. Run using Upstox production: `java -Driko.server.url=api.upstox.com -Driko.ws.server.url=ws-api.upstox.com -jar upstox-ws-test-0.0.1-SNAPSHOT.jar` 
+6. Run using Upstox staging: `java -Driko.server.url=staging-api.upstox.com -Driko.ws.server.url=staging-ws-api.upstox.com -jar upstox-ws-test-0.0.1-SNAPSHOT.jar`
 7. Open your browser and visit `http://localhost:8080`.
 8. Click `Login` and log into Upstox
 9. Click `Subscribe`
