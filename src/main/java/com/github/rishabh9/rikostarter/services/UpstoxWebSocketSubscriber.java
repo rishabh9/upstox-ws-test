@@ -38,7 +38,7 @@ public class UpstoxWebSocketSubscriber implements MessageSubscriber {
                 final String[] cols = row.split(",");
                 final long diff = currentTimeMillis - Long.parseLong(cols[0]);
                 String data = cols[2] + "," + cols[0] + "," + currentTimeMillis + "," + diff;
-                if (diff > 2000) log.info(data);
+                if (diff > 1300) log.info(data);
             }
         } else if (item instanceof ConnectedMessage) {
             final ConnectedMessage message = (ConnectedMessage) item;
